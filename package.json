@@ -4,7 +4,9 @@
   "description": "A bot the wine on the mind.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "start": "node index.js",
+     "dev": "nodemon index.js",
   },
   "repository": {
     "type": "git",
@@ -18,5 +20,15 @@
   "bugs": {
     "url": "https://github.com/samcreate/monty-bot/issues"
   },
-  "homepage": "https://github.com/samcreate/monty-bot#readme"
+  "homepage": "https://github.com/samcreate/monty-bot#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "crypto": "0.0.3",
+    "express": "^4.14.0",
+    "node-fetch": "^1.6.0",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.10.0"
+  }
 }
