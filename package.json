@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-     "start": "node index.js",
-     "dev": "nodemon index.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js --exec babel-node --presets es2015,stage-2"
   },
   "repository": {
     "type": "git",
@@ -22,13 +22,20 @@
   },
   "homepage": "https://github.com/samcreate/monty-bot#readme",
   "dependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.11.4",
     "body-parser": "^1.15.2",
+    "config": "^1.21.0",
     "crypto": "0.0.3",
     "express": "^4.14.0",
     "node-fetch": "^1.6.0",
+    "nodemon": "^1.10.0",
     "request": "^2.74.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-preset-es2015": "^6.13.0",
+    "babel-preset-stage-2": "^6.11.0",
     "nodemon": "^1.10.0"
   }
 }

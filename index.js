@@ -12,36 +12,37 @@
 // 4. WIT_TOKEN=your_access_token FB_APP_SECRET=your_app_secret FB_PAGE_TOKEN=your_page_token node examples/messenger.js
 // 5. Subscribe your page to the Webhooks using verify_token and `https://<your_ngrok_io>/webhook` as callback URL.
 // 6. Talk to your bot on Messenger!
-
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const express = require('express');
 const fetch = require('node-fetch');
 const request = require('request');
+const config = require('config');
 
 let Wit = require('node-wit').Wit;
 let log = require('node-wit').log;
+
+
 
 // Webserver parameter
 const PORT = process.env.PORT || 3000;
 
 // Wit.ai parameters
-const WIT_TOKEN = process.env.WIT_TOKEN;
+const WIT_TOKEN = process.env.WIT_TOKEN || config.get("WIT_TOKEN");
 
 // Messenger API parameters
-const FB_PAGE_ID = process.env.FB_PAGE_ID;
-if (!FB_PAGE_ID) { throw new Error('missing FB_PAGE_ID') }
-const FB_PAGE_TOKEN = process.env.FB_PAGE_TOKEN;
-if (!FB_PAGE_TOKEN) { throw new Error('missing FB_PAGE_TOKEN') }
-const FB_APP_SECRET = process.env.FB_APP_SECRET;
-if (!FB_APP_SECRET) { throw new Error('missing FB_APP_SECRET') }
+const FB_PAGE_ID = process.env.FB_PAGE_ID || config.get("FB_PAGE_ID");
+const FB_PAGE_TOKEN = process.env.FB_PAGE_TOKEN || config.get("FB_PAGE_TOKEN");;
+const FB_APP_SECRET = process.env.FB_APP_SECRET || config.get("FB_APP_SECRET");;
 
 let FB_VERIFY_TOKEN = null;
 crypto.randomBytes(8, (err, buff) => {
   if (err) throw err;
   FB_VERIFY_TOKEN = buff.toString('hex');
-  console.log(`/webhook will accept the Verify Token "${FB_VERIFY_TOKEN}"`);
+  console.log("/webhook will accept the Verify Token "+FB_VERIFY_TOKEN);
 });
+
+
 
 // ----------------------------------------------------------------------------
 // Messenger API specific code
@@ -49,25 +50,69 @@ crypto.randomBytes(8, (err, buff) => {
 // See the Send API reference
 // https://developers.facebook.com/docs/messenger-platform/send-api-reference
 
-const fbMessage = (id, text) => {
-  const body = JSON.stringify({
-    recipient: { id },
-    message: { text },
-  });
-  const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
-  return fetch('https://graph.facebook.com/me/messages?' + qs, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body,
-  })
-  .then(rsp => rsp.json())
-  .then(json => {
-    if (json.error && json.error.message) {
-      throw new Error(json.error.message);
+const fbMessage = (id, text, quickreplies) => {
+
+    let body = {
+        recipient: {
+            id
+        },
+        message: {
+            text
+        },
+    };
+    //add quick replies if present.
+    if (quickreplies) {
+
+        body.message.quick_replies = quickreplies.map(x => ({
+            "title": x,
+            "content_type": "text",
+            "payload": "empty"
+        }));
     }
-    return json;
-  });
+
+    body = JSON.stringify(body);
+    const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
+    return fetch('https://graph.facebook.com/me/messages?' + qs, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body,
+        })
+        .then(rsp => rsp.json())
+        .then(json => {
+            if (json.error && json.error.message) {
+                throw new Error(json.error.message);
+            }
+            return json;
+        });
 };
+
+
+function callSendAPI(messageData) {
+  request({
+    uri: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: { access_token: + encodeURIComponent(FB_PAGE_TOKEN) },
+    method: 'POST',
+    json: messageData
+
+  }, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var recipientId = body.recipient_id;
+      var messageId = body.message_id;
+
+      if (messageId) {
+        console.log("Successfully sent message with id %s to recipient %s", 
+          messageId, recipientId);
+      } else {
+      console.log("Successfully called Send API for recipient %s", 
+        recipientId);
+      }
+    } else {
+      console.error(response.error);
+    }
+  });  
+}
 
 // ----------------------------------------------------------------------------
 // Wit.ai bot specific code
@@ -94,17 +139,29 @@ const findOrCreateSession = (fbid) => {
   return sessionId;
 };
 
+const firstEntityValue = (entities, entity) => {
+  const val = entities && entities[entity] &&
+    Array.isArray(entities[entity]) &&
+    entities[entity].length > 0 &&
+    entities[entity][0].value;
+  if (!val) {
+    return null;
+  }
+  return typeof val === 'object' ? val.value : val;
+};
 // Our bot actions
 const actions = {
-  send({sessionId}, {text}) {
+  send({sessionId, context}, {text,quickreplies}) {
+
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
+    // context.food = 'salmon';
     if (recipientId) {
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
-      return fbMessage(recipientId, text)
+      return fbMessage(recipientId, text, quickreplies)
       .then(() => null)
       .catch((err) => {
         console.error(
@@ -120,9 +177,27 @@ const actions = {
       return Promise.resolve()
     }
   },
+  merge({sessionId, context, text, entities}) {
+    // Retrieve the location entity and store it into a context field
+    const food = firstEntityValue(entities, 'food');
+    console.log('^^^^ : ', entities,food);
+    if (food) {
+      context.food = food;
+    }
+    return Promise.resolve(context);
+  },
+  getWinesForFood({sessionId, context, flavor}) {
+    //console.log('^^^^ : ', sessionId, context)
+    context.flavor = flavor;
+
+    //getWinesByFoodAndFlavor(context.food, context.flavor);
+
+    return Promise.resolve(context);
+  }
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
 };
+
 
 // Setting up our bot
 const wit = new Wit({
@@ -135,7 +210,7 @@ const wit = new Wit({
 const app = express();
 app.use(({method, url}, rsp, next) => {
   rsp.on('finish', () => {
-    console.log(`${rsp.statusCode} ${method} ${url}`);
+    console.log(rsp.statusCode, method, url);
   });
   next();
 });
@@ -170,6 +245,8 @@ app.post('/webhook', (req, res) => {
           // This is needed for our bot to figure out the conversation history
           const sessionId = findOrCreateSession(sender);
 
+         
+
           // We retrieve the message content
           const {text, attachments} = event.message;
 
@@ -188,9 +265,10 @@ app.post('/webhook', (req, res) => {
               text, // the user's message
               sessions[sessionId].context // the user's current session state
             ).then((context) => {
+              console.log('~~~~~~~~~~~~~~~~~~: ', event.message)
               // Our bot did everything it has to do.
               // Now it's waiting for further messages to proceed.
-              console.log('Waiting for next user messages');
+              //console.log('Waiting for next user messages', context);
 
               // Based on the session state, you might want to reset the session.
               // This depends heavily on the business logic of your bot.
