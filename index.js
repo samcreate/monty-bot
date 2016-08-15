@@ -30,15 +30,38 @@ const bot = new BootBot({
   appSecret: config.get('FB_APP_SECRET')
 });
 //`Hello there! My name’s Monty. I’m a bot (⧓) who also happens to be a wine expert.`
+actions.on('send-facebook-card', (data) => {
+  const elements = [
+    {
+        title: 'Maquis Cabernet Sauvignon 2012',
+        subtitle: 'Cabernet Sauvignon from Colchagua Valley, Rapel Valley, Chile',
+        item_url: 'http://www.wine.com/v6/Maquis-Cabernet-Sauvignon-2012/wine/139748/Detail.aspx',
+        image_url: 'http://cdn.fluidretail.net/customers/c1477/13/97/48/_s/pi/n/139748_spin_spin2/main_variation_na_view_01_204x400.jpg',
+        buttons: [{
+            type: 'web_url',
+            url: 'http://www.wine.com/v6/Maquis-Cabernet-Sauvignon-2012/wine/139748/Detail.aspx',
+            title: 'Buy for $12.50'
+        }]
+    }
+  ];
+  bot.sendGenericTemplate(data.recipientId, elements,{typing: 1000});
 
+});
 actions.on('send-facebook-message', (data) => {
-  console.log('an event occurred!',data);
+  console.log('send-facebook-message!',data.text, data.quickreplies);
   const chat = new Chat(bot, data.recipientId);
   // //new Chat(this, senderId)
-  chat.say({
-    text: data.text,
-    quickReplies: data.quickreplies
-  })
+
+  if(data.quickreplies){
+    chat.say({
+      text: data.text,
+      quickReplies: data.quickreplies,
+      typing: 1000
+    })
+  }else{
+    chat.say(data.text,{typing: 1000});
+  }
+
 });
 // bot.on('message', (payload, chat) => {
 //
