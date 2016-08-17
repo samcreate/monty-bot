@@ -11,9 +11,13 @@ $ npm i monty.wine --save-dev
 ```
 
 ## Usage
+```sh
+~/ngrok http --hostname bottletalk.ngrok.io 3000
+```
+Then run
 
-```js
-var monty.wine = require('monty.wine');
+```sh
+npm run dev
 ```
 
 ## Running tests

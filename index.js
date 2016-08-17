@@ -7,6 +7,7 @@ import Chat from './lib/Chat'
 import {Wit, log} from 'node-wit';
 import wineForParties from './chats/wine-for-parties';
 import foodParing from './chats/food-pairing';
+import db from './models';
 
 const actions = new Actions();
 const wit = new Wit({
