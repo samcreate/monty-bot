@@ -31,7 +31,10 @@
     "express": "^4.14.0",
     "node-fetch": "^1.6.0",
     "nodemon": "^1.10.0",
-    "request": "^2.74.0"
+    "pg": "^6.1.0",
+    "pg-hstore": "^2.3.2",
+    "request": "^2.74.0",
+    "sequelize": "^3.24.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
