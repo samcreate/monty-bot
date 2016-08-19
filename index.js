@@ -126,4 +126,4 @@ bot.on('postback:FOOD_PAIRINGS', (payload, chat) => {
 //   chat.say(`Here are your settings: ...`);
 // });
 //
-bot.start();
+bot.start((process.env.PORT || 3000));
