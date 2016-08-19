@@ -35,7 +35,7 @@
     "pg": "^6.1.0",
     "pg-hstore": "^2.3.2",
     "request": "^2.74.0",
-    "sequelize": "^3.24.0"
+    "sequelize": "^3.24.1"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
