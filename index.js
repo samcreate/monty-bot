@@ -59,6 +59,9 @@ bot.setPersistentMenu([
 
 db.sequelize.sync()
   .then(() => {
+    db.BaseAttributes.all({raw:true}).then((records)=>{
+      console.log(records)
+    });
     bot.start((process.env.PORT || 3000));
   })
   .catch((err) => {

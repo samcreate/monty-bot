@@ -7,7 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        Foods.belongsToMany(models.BaseAttributes, {through: 'Attributes'});
+        Foods.belongsToMany(models.BaseAttributes, {through: 'FoodAttributes'});
+        Foods.belongsToMany(models.Varietals, {through: 'FoodVarietals'});
       }
     }
   });

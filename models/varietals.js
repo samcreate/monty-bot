@@ -10,8 +10,9 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        Varietals.belongsToMany(models.BaseAttributes, {through: 'Attributes'});
+        Varietals.belongsToMany(models.BaseAttributes, {through: 'VarietalsAttributes'});
         Varietals.belongsToMany(models.Countries, {through: 'CountryVarietals'});
+        Varietals.belongsToMany(models.Foods, {through: 'FoodVarietals'});
       }
     }
   });
