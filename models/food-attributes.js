@@ -1,11 +1,17 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var CountryVarietals = sequelize.define('CountryVarietals', {}, {
+  var Attributes = sequelize.define('FoodAttributes', {
+    weight: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    }
+  }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+
       }
     }
   });
-  return CountryVarietals;
+  return Attributes;
 };

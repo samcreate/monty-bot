@@ -15,8 +15,8 @@ if (!global.hasOwnProperty('db')) {
     })
   } else {
     // the application is executed on the local machine ... use mysql
-     sequelize = new Sequelize('postgres://postgres:root@localhost:5432/monty');
-    //sequelize = new Sequelize('postgres://xjxawixjxibfsp:leieCrlDuGXs1sFkqBQCCDoR9Y@ec2-50-17-206-164.compute-1.amazonaws.com:5432/deuoak0419t6qe', {native:true});
+    //  sequelize = new Sequelize('postgres://postgres:root@localhost:5432/monty',{logging: false});
+    sequelize = new Sequelize('postgres://xjxawixjxibfsp:leieCrlDuGXs1sFkqBQCCDoR9Y@ec2-50-17-206-164.compute-1.amazonaws.com:5432/deuoak0419t6qe', {native:true});
 
   }
   global.db = {
@@ -27,12 +27,19 @@ if (!global.hasOwnProperty('db')) {
     Session: sequelize.import(__dirname + '/session'),
     PastConversation: sequelize.import(__dirname + '/past-conversations'),
     Appellation: sequelize.import(__dirname + '/appellation'),
-    CountryVarietals: sequelize.import(__dirname + '/countryvarietals'),
+    CountryVarietals: sequelize.import(__dirname + '/country-varietals'),
     Countries: sequelize.import(__dirname + '/countries'),
-    Attributes: sequelize.import(__dirname + '/attributes'),
     BaseAttributes: sequelize.import(__dirname + '/base-attributes'),
     Varietals: sequelize.import(__dirname + '/varietals'),
-    Foods: sequelize.import(__dirname + '/foods')
+    VarietalsAttributes: sequelize.import(__dirname + '/varietals-attributes'),
+    FoodAttributes: sequelize.import(__dirname + '/food-attributes'),
+    FoodVarietals: sequelize.import(__dirname + '/food-varietals'),
+    VarietalsMedia: sequelize.import(__dirname + '/varietals-media'),
+    Wines: sequelize.import(__dirname + '/wines'),
+    WinesMedia: sequelize.import(__dirname + '/wines-media'),
+    WinesAttributes: sequelize.import(__dirname + '/wines-attributes'),
+    Foods: sequelize.import(__dirname + '/foods'),
+    GeneralMedia: sequelize.import(__dirname + '/general-media')
   }
 
   Object.keys(db).forEach(function(modelName) {

@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var Attributes = sequelize.define('Attributes', {
+  var Attributes = sequelize.define('CountryVarietals', {
   }, {
     classMethods: {
       associate: function(models) {

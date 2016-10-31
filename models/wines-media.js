@@ -1,18 +1,18 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var BaseAttributes = sequelize.define('BaseAttributes', {
-    name: DataTypes.STRING,
+  var WinesMedia = sequelize.define('WinesMedia', {
+    filename: DataTypes.STRING,
     type: {
       type: DataTypes.ENUM,
-      values: ['flavor', 'aroma', 'wine-attr', 'other']
-    },
-    importance: DataTypes.INTEGER
+      values: ['image', 'video', 'audio', 'file']
+    }
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        WinesMedia.belongsTo(models.Wines);
       }
     }
   });
-  return BaseAttributes;
+  return WinesMedia;
 };
