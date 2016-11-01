@@ -8,7 +8,7 @@ module.exports = (bot) => {
     console.log('postback:WINE_FOOD')
     Sessions.instance.findOrCreate(payload.sender.id).then(({session,user})=>{
       //console.log('postback:WINE_PAIRINGS findOrCreateV2',sessionId,user.get('first_name'))
-      bot.runAIRequest({message:{text:`wine for food`}},session);
+      bot.runAIRequest({message:{text:`wine for food`},sender:{id:chat.userId}},session);
     });
 
   });
