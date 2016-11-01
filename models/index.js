@@ -16,7 +16,7 @@ if (!global.hasOwnProperty('db')) {
   } else {
     // the application is executed on the local machine ... use mysql
     //  sequelize = new Sequelize('postgres://postgres:root@localhost:5432/monty',{logging: false});
-    sequelize = new Sequelize('postgres://xjxawixjxibfsp:leieCrlDuGXs1sFkqBQCCDoR9Y@ec2-50-17-206-164.compute-1.amazonaws.com:5432/deuoak0419t6qe', {native:true});
+    sequelize = new Sequelize('postgres://xjxawixjxibfsp:leieCrlDuGXs1sFkqBQCCDoR9Y@ec2-50-17-206-164.compute-1.amazonaws.com:5432/deuoak0419t6qe', {native:true,logging: false});
 
   }
   global.db = {

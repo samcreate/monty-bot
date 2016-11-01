@@ -12,5 +12,6 @@
     "REDIS_PASSWORD": "4Bs?u4Z#!&s%nU`8",
     "LOG_TOKEN": "2330212a-6565-4099-8d8f-d0922f0fc210",
     "FOLLOUP_TIME_HOURS": 22,
-    "DASHBOT_API_KEY": "yZFDpUIGiSsgQANTUoHKKVk1mGWjzoxjsiP1I3LF"
+    "DASHBOT_API_KEY": "yZFDpUIGiSsgQANTUoHKKVk1mGWjzoxjsiP1I3LF",
+    "MEDIA_URL": "https://s3-us-west-1.amazonaws.com/monty-prod/"
 }

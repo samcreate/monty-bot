@@ -7,17 +7,17 @@ module.exports = (bot) => {
       buttons: [
         {
           type: 'postback',
-          title: 'Pair wine with food',
+          title: 'Pairing',
           payload: 'WINE_FOOD'
         },
         {
           type: 'postback',
-          title: 'Find wine for an occasion',
+          title: 'Gifting',
           payload: 'WINE_OCCASIONS'
         },
         {
           type: 'postback',
-          title: 'Educate my palate',
+          title: 'Occasions',
           payload: 'TASE_PROFILE'
         }
       ]

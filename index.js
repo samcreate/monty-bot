@@ -8,6 +8,7 @@ import wineForFood from './chats/wine-food';
 import wineForOccasions from './chats/wine-occasion';
 import menu from './chats/menu';
 import help from './chats/help';
+import intro from './chats/intro';
 import db from './models';
 import Apiai from 'apiai';
 import _greeting from './chats/_greeting'
@@ -27,14 +28,17 @@ const bot = new BootBot({
 bot.module(wineForParties);
 bot.module(wineForFood);
 bot.module(wineForOccasions);
-// bot.module(help);
 bot.module(menu);
+bot.module(intro);
 
 bot.setGreetingText(`Hello, My name’s Monty. I’m a bot (⧓) who also happens to be a wine expert.`);
+//show-menu
 bot.setGetStartedButton((payload, chat) => {
+
   Sessions.instance.findOrCreate(chat.userId).then(({session,user})=>{
-    let context = {name: 'intro'}
-    bot.runAIRequest({message:{text:'intro'},sender:{id:chat.userId}},session,context);
+    let context = {name: `intro_1`}
+    bot.runAIRequest({message:{text:'apigiveme1'},sender:{id:chat.userId}},session,context,1000);
+
   });
 
 });
@@ -56,13 +60,10 @@ bot.setPersistentMenu([
   }
 ]);
 
-
+bot.start((process.env.PORT || 3000));
 db.sequelize.sync()
   .then(() => {
-    // db.BaseAttributes.all({raw:true}).then((records)=>{
-    //   console.log(records)
-    // });
-    bot.start((process.env.PORT || 3000));
+    console.log('db syched')
   })
   .catch((err) => {
     console.log("ERROR: ", err);
