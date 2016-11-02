@@ -9,6 +9,7 @@ import wineForOccasions from './chats/wine-occasion';
 import menu from './chats/menu';
 import help from './chats/help';
 import intro from './chats/intro';
+import taste_profile from './chats/taste-profile';
 import db from './models';
 import Apiai from 'apiai';
 import _greeting from './chats/_greeting'
@@ -30,6 +31,7 @@ bot.module(wineForFood);
 bot.module(wineForOccasions);
 bot.module(menu);
 bot.module(intro);
+bot.module(taste_profile);
 
 bot.setGreetingText(`Hello, My name’s Monty. I’m a bot (⧓) who also happens to be a wine expert.`);
 //show-menu

@@ -46,6 +46,7 @@ module.exports = function(sequelize, DataTypes) {
           hooks: true
         });
         User.hasOne(models.Session, {as: 'session',onDelete: 'cascade'})
+        // User.hasOne(models.UserTasteProfile, {as: 'profile',onDelete: 'cascade'})
       }
     },
     indexes: [{
