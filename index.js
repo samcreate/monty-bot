@@ -35,6 +35,16 @@ bot.module(taste_profile);
 
 bot.setGreetingText(`Hello, My name’s Monty. I’m a bot (⧓) who also happens to be a wine expert.`);
 //show-menu
+
+bot.on('attachment',(payload, chat) => {
+  let attachment = payload.message.attachments[0];
+  if(attachment.hasOwnProperty('type') && attachment.type === 'location'){
+    //console.log('location!!!', attachment.payload.coordinates)
+    //console.log(payload.coordinates)
+    //chat.say('Thanks, I love that area.')
+  }
+})
+// console.log(event.message.attachments[0].payload.coordinates)
 bot.setGetStartedButton((payload, chat) => {
 
   Sessions.instance.findOrCreate(chat.userId).then(({session,user})=>{
