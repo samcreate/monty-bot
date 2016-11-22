@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "nodemon index.js --exec babel-node --presets es2015,stage-2",
+    "add": "nodemon add_entities.js --exec babel-node --presets es2015,stage-2",
     "prod": "nodemon index.js --harmony_destructuring --exec babel-node --presets es2015,stage-2 ",
     "worker": "nodemon --verbose --debug workers/kill_sessions.js --harmony_destructuring --exec babel-node --presets es2015,stage-2",
     "follow-up": "nodemon --verbose --debug workers/send-followup.js --harmony_destructuring --exec babel-node --presets es2015,stage-2"

@@ -30,6 +30,10 @@ module.exports = function(sequelize, DataTypes) {
     gender: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    profile: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     classMethods: {
@@ -45,8 +49,10 @@ module.exports = function(sequelize, DataTypes) {
           onDelete: 'cascade',
           hooks: true
         });
+
         User.hasOne(models.Session, {as: 'session',onDelete: 'cascade'})
-        // User.hasOne(models.UserTasteProfile, {as: 'profile',onDelete: 'cascade'})
+        User.hasMany(models.UserProfile, {as: 'userProfile',onDelete: 'cascade'})
+        User.belongsToMany(models.TasteProfileNames, {through: 'UserProfile', as: 'tasteName'});
       }
     },
     indexes: [{

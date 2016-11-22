@@ -39,7 +39,9 @@ if (!global.hasOwnProperty('db')) {
     WinesMedia: sequelize.import(__dirname + '/wines-media'),
     WinesAttributes: sequelize.import(__dirname + '/wines-attributes'),
     Foods: sequelize.import(__dirname + '/foods'),
-    GeneralMedia: sequelize.import(__dirname + '/general-media')
+    GeneralMedia: sequelize.import(__dirname + '/general-media'),
+    TasteProfileNames: sequelize.import(__dirname + '/taste-profile-names'),
+    UserProfile: sequelize.import(__dirname + '/user-profile')
   }
 
   Object.keys(db).forEach(function(modelName) {
