@@ -6,7 +6,7 @@ module.exports = (bot) => {
     let elements = [
       {
         "title": "Pairing",
-        "image_url": "https://s3-us-west-1.amazonaws.com/monty-prod/0855dcda-e8f8-4759-ad2d-37a53da2df1e.png",
+        "image_url": "https://s3-us-west-1.amazonaws.com/monty-prod/9726f0d5-08ed-4ffb-962e-f73375a0ec0b.png",
         "subtitle": "I'm planning a meal and I want the perfect wine to go with it.",
         "buttons": [
           {
@@ -18,7 +18,7 @@ module.exports = (bot) => {
       },
       {
         "title": "Gifting",
-        "image_url": "https://s3-us-west-1.amazonaws.com/monty-prod/b51f2c6c-1e21-4789-bef7-bb7f6cf7a806.png",
+        "image_url": "https://s3-us-west-1.amazonaws.com/monty-prod/1882704c-b01a-4ee8-9667-9302557ba976.png",
         "subtitle": "I need to get a special something for that special someone. ",
         "buttons": [
           {
@@ -30,7 +30,7 @@ module.exports = (bot) => {
       },
       {
         "title": "Occasions",
-        "image_url": "https://s3-us-west-1.amazonaws.com/monty-prod/23a605e3-9425-4683-8cb6-51f0e130f45a.png",
+        "image_url": "https://s3-us-west-1.amazonaws.com/monty-prod/286b30e9-d7d2-4479-8e62-62da864f3e39.png",
         "subtitle": "I want a wine for a special event or occasion.",
         "buttons": [
           {
