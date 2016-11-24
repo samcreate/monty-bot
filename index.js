@@ -4,8 +4,9 @@ import BootBot from './lib/BootBot';
 import config from 'config';
 import Chat from './lib/Chat'
 import wineForParties from './chats/wine-for-parties';
-import wineForFood from './chats/wine-food';
+import start_pairing from './chats/start-pairing';
 import wineForOccasions from './chats/wine-occasion';
+import varietals from './chats/varietals';
 import menu from './chats/menu';
 import help from './chats/help';
 import intro from './chats/intro';
@@ -27,10 +28,11 @@ const bot = new BootBot({
 
 //Setup conversation modules
 bot.module(wineForParties);
-bot.module(wineForFood);
+bot.module(start_pairing);
 bot.module(wineForOccasions);
 bot.module(menu);
 bot.module(intro);
+bot.module(varietals);
 bot.module(taste_profile);
 
 

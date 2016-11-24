@@ -4,6 +4,22 @@ import db from '../models';
 
 
 module.exports = (bot) => {
+
+  //new
+  bot.on('postback:START_PAIRING', (payload, chat) => {
+    Sessions.instance.findOrCreate(payload.sender.id).then(({user,session})=>{
+      console.log('postback:START_PAIRING ')
+      bot.runAIRequest({message:{text:`pairing food`}},session);
+    });
+  });
+
+
+
+
+
+
+
+  // OLD
   bot.on('postback:WINE_FOOD', (payload, chat) => {
     console.log('postback:WINE_FOOD')
     Sessions.instance.findOrCreate(payload.sender.id).then(({session,user})=>{
