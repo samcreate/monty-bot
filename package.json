@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "nodemon index.js --exec babel-node --presets es2015,stage-2",
-    "add": "nodemon add_entities.js --exec babel-node --presets es2015,stage-2",
+    "add": "nodemon add_intents.js --exec babel-node --presets es2015,stage-2",
     "prod": "nodemon index.js --harmony_destructuring --exec babel-node --presets es2015,stage-2 ",
     "worker": "nodemon --verbose --debug workers/kill_sessions.js --harmony_destructuring --exec babel-node --presets es2015,stage-2",
     "follow-up": "nodemon --verbose --debug workers/send-followup.js --harmony_destructuring --exec babel-node --presets es2015,stage-2"
@@ -58,6 +58,10 @@
     "babel-cli": "^6.11.4",
     "babel-preset-es2015": "^6.13.0",
     "babel-preset-stage-2": "^6.11.0",
-    "nodemon": "^1.10.0"
+    "fs": "0.0.1-security",
+    "google-auth-library": "^0.9.10",
+    "googleapis": "^14.2.0",
+    "nodemon": "^1.10.0",
+    "readline": "^1.3.0"
   }
 }

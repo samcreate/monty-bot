@@ -54,7 +54,7 @@ module.exports = (bot) => {
               payload: `VARIETAL_SPECIFIC_${varietal.id}`
             }))
 
-            console.log(tmp_buttons)
+            // console.log(tmp_buttons)
 
             tmp_card = cardGen({
               title: varietal.name,
@@ -65,18 +65,18 @@ module.exports = (bot) => {
             cards.push(tmp_card);
           }
 
-          console.log(cards);
+          // console.log(cards);
           chat.sendGenericTemplate(cards, {
             typing: true
           }).then((res) => {
-            console.log('menu worked!')
+            // console.log('menu worked!')
           })
           .catch((err) => {
             console.log(err)
           })
         })
         .catch((err) => {
-          console.log('err: ', err)
+          // console.log('err: ', err)
         })
 
       console.log('pairing-varietals', data.parameters['wine-type'].toLowerCase())
