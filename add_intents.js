@@ -156,11 +156,14 @@ function listMajors(auth) {
         var row = rows[i];
         // Print columns A and E, which correspond to indices 0 and 4.
             var varietal = {};
+            varietal.id = row[0];
             varietal.name = toASCII(row[1])
             varietal.context_name = row[1].replace(/[^a-zA-Z0-9]+/g, '').toLowerCase()
-            varietal.description = `Pronounced ${row[15]}. ${row[20]}`
+            varietal.description = `${row[16]}`
+            // console.log(varietal.id)
             varietal = itentGen(varietal);
 
+            // console.log(varietal)
             request.post({
               headers: {
                 'Authorization': `Bearer 12242d9207544c9a8d265cc46c4e7c4e`,
@@ -171,8 +174,19 @@ function listMajors(auth) {
             }, function(error, response, body) {
               console.log('body',body);
             });
-            
+
+
       }
     }
   });
 }
+
+// request.get({
+//   headers: {
+//     'Authorization': `Bearer 12242d9207544c9a8d265cc46c4e7c4e`,
+//     'Content-Type': 'application/json; charset=utf-8',
+//   },
+//   url: api_endpoint+"/2da4a355-5a34-4aed-a77d-18592a36f558",
+// }, function(error, response, body) {
+//   console.log('body',body);
+// });
