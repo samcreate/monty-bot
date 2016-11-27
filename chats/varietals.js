@@ -38,7 +38,6 @@ module.exports = (bot) => {
     let varietal_id = data.id;
     console.log('!@---------------------get-winesbyvarietal', varietal_id)
     Sessions.instance.findOrCreate(payload.sender.id).then(({user, session}) => {
-      console.log('!@---------------------get-winesbyvarietal 1')
       db.Wines.findAll({
         where: {
           varietal_id: varietal_id,
@@ -49,10 +48,8 @@ module.exports = (bot) => {
         ]
       })
         .then((wines) => {
-          console.log('!@---------------------get-winesbyvarietal 2')
           let elements = [];
           wines.forEach((wine, index) => {
-            console.log('!@---------------------get-winesbyvarietal 3 ', index)
             let hero = 'https://s3-us-west-1.amazonaws.com/monty-prod/'+wine.hero || 'https://s3-us-west-1.amazonaws.com/monty-prod/92179bf9-e253-4ff2-b1a7-3fa56b5d969f.jpg'
             wine = wineListGen({
               id: wine.id,
@@ -67,7 +64,6 @@ module.exports = (bot) => {
             elements.push(wine);
           });
           // console.log(elements)
-          console.log('!@---------------------get-winesbyvarietal 4',elements)
           chat.sendListTemplate(elements, {
             typing: true
           }).catch((err) => {
