@@ -1,9 +1,10 @@
 'use strict';
 import Sessions from '../lib/sessions';
 import db from '../models';
+import wineListGen from '../lib/utils/wine-list-gen'
 module.exports = (bot) => {
 
-
+  // for variteal learn more button
   bot.on('postback', (payload, chat) => {
     const re = /VARIETAL_LEARNMORE_(\d+)/i;
     const buttonPayload = payload.postback.payload;
@@ -15,7 +16,9 @@ module.exports = (bot) => {
       Sessions.instance.findOrCreate(payload.sender.id).then(({user, session}) => {
         console.log('postback:START_PAIRING ');
         db.Varietals.findOne({
-          where: {id: varitealId}
+          where: {
+            id: varitealId
+          }
         }).then(function(varietal) {
           console.log(varietal.name)
           bot.runAIRequest({
@@ -29,8 +32,47 @@ module.exports = (bot) => {
     }
   });
 
+
   bot.on('get-winesbyvarietal', (payload, chat, data) => {
-    console.log(data)
+
+    let varietal_id = data.id;
+    console.log('get-winesbyvarietal', varietal_id)
+    Sessions.instance.findOrCreate(payload.sender.id).then(({user, session}) => {
+      db.Wines.findAll({
+        where: {
+          varietal_id: varietal_id,
+        },
+        limit: 4,
+        order: [
+          [db.sequelize.fn('RANDOM')]
+        ]
+      })
+        .then((wines) => {
+
+          let elements = [];
+          wines.forEach((wine) => {
+            let hero = 'https://s3-us-west-1.amazonaws.com/monty-prod/'+wine.hero || 'https://s3-us-west-1.amazonaws.com/monty-prod/92179bf9-e253-4ff2-b1a7-3fa56b5d969f.jpg'
+            wine = wineListGen({
+              id: wine.id,
+              title: wine.name,
+              hero: hero,
+              producer: wine.producer,
+              url: wine.url,
+              price: wine.price,
+              vintage: wine.vintage
+            });
+            elements.push(wine);
+          });
+          // console.log(elements)
+          chat.sendListTemplate(elements, {
+            typing: true
+          }).catch((err) => {
+            console.log('err: ', err)
+          })
+        })
+
+    });
+  // {id, title, hero, producer, url, price}
   })
 
   // bot.on('get-varietals', (payload, chat, data) => {
