@@ -67,7 +67,7 @@ module.exports = (bot) => {
             elements.push(wine);
           });
           // console.log(elements)
-          console.log('!@---------------------get-winesbyvarietal 4')
+          console.log('!@---------------------get-winesbyvarietal 4',elements)
           chat.sendListTemplate(elements, {
             typing: true
           }).catch((err) => {
