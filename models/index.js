@@ -11,7 +11,8 @@ if (!global.hasOwnProperty('db')) {
       protocol: 'postgres',
       port: match[4],
       host: match[3],
-      logging: true //false
+      native:true,
+      logging: false
     })
   } else {
     // the application is executed on the local machine ... use mysql

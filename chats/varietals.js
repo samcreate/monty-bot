@@ -34,9 +34,9 @@ module.exports = (bot) => {
 
 
   bot.on('get-winesbyvarietal', (payload, chat, data) => {
-
+    console.log('get-winesbyvarietal called', data)
     let varietal_id = data.id;
-    console.log('get-winesbyvarietal', varietal_id)
+    console.log('!@---------------------get-winesbyvarietal', varietal_id)
     Sessions.instance.findOrCreate(payload.sender.id).then(({user, session}) => {
       db.Wines.findAll({
         where: {
