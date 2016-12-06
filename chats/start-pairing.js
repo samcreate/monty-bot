@@ -22,22 +22,26 @@ module.exports = (bot) => {
   bot.on('pairing-varietals', (payload, chat, data) => {
     Sessions.instance.findOrCreate(payload.sender.id).then(({user, session}) => {
       let wine_basic_type = data.parameters['wine-type'].toLowerCase();
+      let _varietals;
       db.Varietals.findAll({
         where: {
           type: wine_basic_type,
         },
+        include: [{model: db.VarietalsChats, as: 'Chats'}],
         limit: 3,
         order: [
-          [db.sequelize.fn('RANDOM')]
+          [db.sequelize.fn('RANDOM')], [ { model:db.VarietalsChats, as: 'Chats' }, 'order']
         ]
       })
         .then((varietals) => {
+          console.log('varietalsvarietalsvarietalsvarietals', varietals)
           let holder_image = 'https://s3-us-west-1.amazonaws.com/monty-prod/92179bf9-e253-4ff2-b1a7-3fa56b5d969f.jpg'
           let cards = [];
           for (var i = 0; i < varietals.length; i++) {
             let varietal = varietals[i];
             let tmp_card;
             let tmp_buttons = [];
+            console.log('here', varietal.get({plain:true}))
             tmp_buttons.push(buttonGen({
               type: 'postback',
               title: 'Learn More',
@@ -59,7 +63,7 @@ module.exports = (bot) => {
             tmp_card = cardGen({
               title: varietal.name,
               hero: varietal.hero || holder_image,
-              subtitle: varietal.description,
+              subtitle: varietal.Chats[0].chat,
               buttons: tmp_buttons
             });
             cards.push(tmp_card);
@@ -71,12 +75,12 @@ module.exports = (bot) => {
           }).then((res) => {
             // console.log('menu worked!')
           })
-          .catch((err) => {
-            console.log(err)
-          })
+            .catch((err) => {
+              console.log(err)
+            })
         })
         .catch((err) => {
-          // console.log('err: ', err)
+          console.log('err: ', err)
         })
 
       console.log('pairing-varietals', data.parameters['wine-type'].toLowerCase())

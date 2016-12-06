@@ -30,6 +30,12 @@ module.exports = function(sequelize, DataTypes) {
           hooks: true
         });
 
+        Varietals.hasMany(models.VarietalsChats, {
+          as: 'Chats',
+          onDelete: 'cascade',
+          hooks: true
+        });
+
         Varietals.hasMany(models.Wines, {
           foreignKey: 'varietal_id',
           as: 'Specifics',

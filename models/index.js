@@ -42,7 +42,8 @@ if (!global.hasOwnProperty('db')) {
     Foods: sequelize.import(__dirname + '/foods'),
     GeneralMedia: sequelize.import(__dirname + '/general-media'),
     TasteProfileNames: sequelize.import(__dirname + '/taste-profile-names'),
-    UserProfile: sequelize.import(__dirname + '/user-profile')
+    UserProfile: sequelize.import(__dirname + '/user-profile'),
+    VarietalsChats: sequelize.import(__dirname + '/varietals-chats')
   }
 
   Object.keys(db).forEach(function(modelName) {
